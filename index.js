@@ -1,6 +1,6 @@
 import {on, fix_dialogs} from "https://rosuav.github.io/shed/chocfactory.js";
 import "https://cdn.jsdelivr.net/npm/comfy.js/dist/comfy.min.js"; const ComfyJS = window.ComfyJS;
-const {P, IMG} = choc;
+const {P, IMG, FIGURE, FIGCAPTION} = choc;
 let participantdata = null;
 
 fetch("https://sikorsky.rosuav.com/static/atc-" + window.location.hash.slice(1) + ".json")
@@ -15,10 +15,10 @@ ComfyJS.onChat = ( user, message, flags, self, extra ) => {
 	if (!m) return;
 	const artist = m[1], link = participantdata.images[m[1]];
 	if (!link) return;
-	set_content("main", [
-		P("ATC from " + artist),
+	set_content("main", FIGURE({className: "show"}, [
+		FIGCAPTION("ATC from " + artist),
 		IMG({src: link}),
-	]).classList.add("show");
-	setTimeout(() => DOM("main").classList.remove("show"), 10000);
+	]));
+	setTimeout(() => DOM("main figure").classList.remove("show"), 10000);
 }
 ComfyJS.Init("mrsoef5");
